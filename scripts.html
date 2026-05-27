@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>南消培训 · 视频脚本库</title>
+<style>
+:root{
+  --primary:#1E40AF;--primary-light:#3B82F6;--primary-bg:#EFF6FF;
+  --accent:#F97316;--accent-bg:#FFF7ED;
+  --bg:#FFFFFF;--bg-alt:#F8FAFC;
+  --text:#1E293B;--text-muted:#64748B;--text-light:#94A3B8;--border:#E2E8F0;
+  --success:#10B981;--success-bg:#ECFDF5;
+  --warning:#F59E0B;--warning-bg:#FFFBEB;
+  --danger:#EF4444;--danger-bg:#FEF2F2;
+  --purple:#8B5CF6;--purple-bg:#F5F3FF;
+  --radius:14px;--radius-sm:10px;
+  --shadow:0 2px 12px rgba(30,64,175,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg-alt);line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* Nav */
+.nav{position:sticky;top:0;height:56px;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);z-index:100;display:flex;align-items:center;padding:0 20px}
+.nav-inner{max-width:960px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.nav-brand{font-size:15px;font-weight:800;color:var(--primary);white-space:nowrap}
+.nav-brand span{color:var(--accent)}
+.nav-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:var(--text);transition:all .15s;white-space:nowrap}
+.btn:hover{background:var(--bg-alt);border-color:var(--primary-light)}
+.btn-primary{background:var(--primary);color:white;border-color:var(--primary)}
+.btn-primary:hover{background:var(--primary-light)}
+.btn-success{background:var(--success);color:white;border-color:var(--success)}
+.btn-accent{background:var(--accent);color:white;border-color:var(--accent)}
+
+/* Dashboard */
+.container{max-width:960px;margin:0 auto;padding:20px}
+@media(max-width:768px){.container{padding:16px 12px}}
+
+.dashboard{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.dash-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;text-align:center;cursor:pointer;transition:all .15s}
+.dash-card:hover{border-color:var(--primary-light);transform:translateY(-1px)}
+.dash-card.active{border-color:var(--primary);background:var(--primary-bg)}
+.dash-val{font-size:22px;font-weight:800;letter-spacing:-1px}
+.dash-label{font-size:10px;color:var(--text-muted);margin-top:2px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.c-blue{color:var(--primary)}.c-green{color:var(--success)}.c-orange{color:var(--accent)}.c-red{color:var(--danger)}.c-purple{color:var(--purple)}
+
+/* Filters */
+.filters{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
+.filter-label{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px}
+.filter-btn{padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:var(--text-muted);transition:all .15s}
+.filter-btn:hover{border-color:var(--primary-light);color:var(--primary)}
+.filter-btn.active{background:var(--primary);color:white;border-color:var(--primary)}
+.search-box{padding:6px 12px;border:1px solid var(--border);border-radius:8px;font-size:12px;width:200px;outline:none}
+.search-box:focus{border-color:var(--primary-light);box-shadow:0 0 0 3px var(--primary-bg)}
+
+/* Script Card */
+.script{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:20px;box-shadow:var(--shadow);overflow:hidden;transition:border-color .2s}
+.script.status-approved{border-left:4px solid var(--success)}
+.script.status-rejected{border-left:4px solid var(--danger)}
+.script.status-revised{border-left:4px solid var(--warning)}
+.script-header{padding:20px 24px 16px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;cursor:pointer;user-select:none}
+.script-header:hover{background:var(--bg-alt)}
+.script-left{flex:1;min-width:0}
+.script-num{display:inline-flex;width:30px;height:30px;background:var(--primary-bg);color:var(--primary);border-radius:8px;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin-right:10px;flex-shrink:0}
+.script-num.cat-a{background:var(--primary-bg);color:var(--primary)}
+.script-num.cat-b{background:var(--accent-bg);color:var(--accent)}
+.script-num.cat-c{background:var(--success-bg);color:var(--success)}
+.script-num.cat-d{background:var(--purple-bg);color:var(--purple)}
+.script-num.cat-e{background:var(--warning-bg);color:var(--warning)}
+.script-title-text{font-size:16px;font-weight:700;display:inline}
+.script-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.3px}
+.tag-cat{background:var(--primary-bg);color:var(--primary)}
+.tag-dur{background:var(--bg-alt);color:var(--text-muted)}
+.tag-status{padding:3px 10px}
+.tag-draft{background:var(--bg-alt);color:var(--text-muted)}
+.tag-approved{background:var(--success-bg);color:var(--success)}
+.tag-rejected{background:var(--danger-bg);color:var(--danger)}
+.tag-revised{background:var(--warning-bg);color:var(--warning)}
+.script-toggle{font-size:18px;color:var(--text-light);transition:transform .2s;flex-shrink:0;margin-top:4px}
+.script.open .script-toggle{transform:rotate(180deg)}
+
+.script-body{display:none;padding:0 24px 24px;border-top:1px solid var(--border)}
+.script.open .script-body{display:block}
+
+.section-label{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.8px;margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.section-label:first-child{margin-top:16px}
+
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:10px 0}
+.meta-item{background:var(--bg-alt);border-radius:8px;padding:10px 14px;font-size:12px}
+.meta-item strong{display:block;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+
+.hook-box{background:var(--accent-bg);border-left:3px solid var(--accent);padding:14px 18px;border-radius:0 8px 8px 0;font-size:13px;font-weight:500;margin:10px 0;line-height:1.8}
+
+.script-text{background:var(--bg-alt);border-radius:8px;padding:18px;font-size:13px;line-height:2;margin:10px 0;white-space:pre-wrap;border:1px solid var(--border)}
+
+.points-list{padding-left:18px;font-size:13px;line-height:2}
+.points-list li{margin-bottom:4px}
+
+.publish-box{background:var(--primary-bg);border-radius:8px;padding:14px 18px;font-size:12px;line-height:1.8;margin:10px 0}
+
+/* Review Panel */
+.review-panel{margin-top:20px;padding-top:16px;border-top:2px solid var(--border)}
+.review-title{font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
+.review-actions{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.review-btn{padding:6px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:var(--bg);transition:all .15s}
+.review-btn:hover{transform:translateY(-1px)}
+.review-btn.approve{border-color:var(--success);color:var(--success)}
+.review-btn.approve:hover,.review-btn.approve.active{background:var(--success);color:white}
+.review-btn.reject{border-color:var(--danger);color:var(--danger)}
+.review-btn.reject:hover,.review-btn.reject.active{background:var(--danger);color:white}
+.review-btn.revise{border-color:var(--warning);color:var(--warning)}
+.review-btn.revise:hover,.review-btn.revise.active{background:var(--warning);color:white}
+
+.comment-area{width:100%;min-height:80px;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;resize:vertical;outline:none;margin-top:8px}
+.comment-area:focus{border-color:var(--primary-light);box-shadow:0 0 0 3px var(--primary-bg)}
+.comment-area::placeholder{color:var(--text-light)}
+.save-comment{margin-top:8px}
+
+.comment-list{margin-top:12px}
+.comment-item{background:var(--bg-alt);border-radius:8px;padding:12px;margin-bottom:8px;font-size:12px;position:relative}
+.comment-item .comment-time{font-size:10px;color:var(--text-light);margin-bottom:4px}
+.comment-item .comment-text{line-height:1.7}
+.comment-delete{position:absolute;top:8px;right:8px;background:none;border:none;color:var(--text-light);cursor:pointer;font-size:14px;padding:4px}
+.comment-delete:hover{color:var(--danger)}
+
+/* Print Styles */
+@media print{
+  .nav,.dashboard,.filters,.review-panel,.nav-actions,.script-toggle,.btn,.no-print{display:none!important}
+  .script{break-inside:avoid;border:1px solid #ddd!important;margin-bottom:16px!important;border-left-width:1px!important}
+  .script-body{display:block!important;border-top:1px solid #ddd!important}
+  .script-header{cursor:default}
+  body{background:white}
+  .container{max-width:100%;padding:0}
+  .script-text{background:#f5f5f5!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .hook-box{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .tag{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+.hidden{display:none!important}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--text);color:white;padding:10px 24px;border-radius:999px;font-size:13px;font-weight:600;z-index:200;animation:fadeInUp .3s ease}
+@keyframes fadeInUp{from{opacity:0;transform:translateX(-50%) translateY(16px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">Solo<span>OS</span> · 视频脚本库 <span style="font-weight:400;font-size:12px;color:var(--text-muted)">v1.0</span></div>
+    <div class="nav-actions">
+      <input type="text" class="search-box" id="searchBox" placeholder="搜索脚本..." oninput="filterScripts()">
+      <button class="btn" onclick="expandAll()">全部展开</button>
+      <button class="btn" onclick="collapseAll()">全部折叠</button>
+      <button class="btn btn-accent" onclick="exportPDF()">导出 PDF</button>
+      <button class="btn btn-success" onclick="exportApproved()">导出已通过</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- Dashboard -->
+<div class="dashboard" id="dashboard">
+  <div class="dash-card" onclick="filterByStatus('all')"><div class="dash-val c-blue" id="totalCount">20</div><div class="dash-label">全部脚本</div></div>
+  <div class="dash-card" onclick="filterByStatus('approved')"><div class="dash-val c-green" id="approvedCount">0</div><div class="dash-label">已通过</div></div>
+  <div class="dash-card" onclick="filterByStatus('revised')"><div class="dash-val c-orange" id="revisedCount">0</div><div class="dash-label">需修改</div></div>
+  <div class="dash-card" onclick="filterByStatus('rejected')"><div class="dash-val c-red" id="rejectedCount">0</div><div class="dash-label">不采用</div></div>
+  <div class="dash-card" onclick="filterByStatus('draft')"><div class="dash-val c-purple" id="draftCount">20</div><div class="dash-label">待审核</div></div>
+</div>
+
+<!-- Filters -->
+<div class="filters">
+  <span class="filter-label">分类</span>
+  <button class="filter-btn active" data-cat="all" onclick="filterByCat('all',this)">全部</button>
+  <button class="filter-btn" data-cat="A" onclick="filterByCat('A',this)">政策紧迫</button>
+  <button class="filter-btn" data-cat="B" onclick="filterByCat('B',this)">精准人群</button>
+  <button class="filter-btn" data-cat="C" onclick="filterByCat('C',this)">信任建立</button>
+  <button class="filter-btn" data-cat="D" onclick="filterByCat('D',this)">知识干货</button>
+  <button class="filter-btn" data-cat="E" onclick="filterByCat('E',this)">转化逼单</button>
+</div>
+
+<!-- Scripts Container -->
+<div id="scriptsContainer"></div>
+
+</div>
+
+<script>
+const SCRIPTS = [
+  {
+    id:1, cat:"A", catName:"政策紧迫", duration:"45-60s", title:"10 月政策改革倒计时：现在不考，以后更难",
+    hook:"你知道吗？今年 10 月，消防证的考试题库要大改。改完之后，通过率可能直接腰斩。",
+    script:`【开头 — 紧迫感】
+你知道吗？今年 10 月，国家要对消防设施操作员的考试进行政策性改革。
+
+题库更新、考试标准变化、通过率可能直接下降。
+
+【中间 — 算账】
+现在考试，用的是现行题库，我们的通过率做到了 80%，全国领先。
+
+但改革之后？没人知道新题库长什么样，所有人都要重新适应。
+
+换句话说——现在是你拿证成本最低、通过率最高的窗口期。
+
+【核心数据】
+我们目前的综合通过率 80%，全国平均只有 30%。
+盛宏石化 296 人团报，通过 285 人，通过率 96.3%。
+
+这些数据，改革后还能不能保持？说实话，我们自己也没底。
+
+【结尾 — 行动号召】
+所以，如果你一直在犹豫要不要考，现在就是最好的时机。
+评论区扣"报名"两个字，我发你详细资料和政策解读。
+
+别等改革后再后悔。`,
+    points:["强调 10 月改革窗口期","引用 80% vs 30% 通过率数据","盛宏石化 296 人案例","制造紧迫感驱动立即行动"],
+    shooting:"室内口播，背景放消防设备或教室",
+    personnel:"营销方向老师（由甲方安排）",
+    publish:{platform:"抖音官号",time:"工作日 18:00-20:00",tags:"#消防证 #消防设施操作员 #政策改革 #考证",note:"评论区置顶报名引导链接"}
+  },
+  {
+    id:2, cat:"E", catName:"转化逼单", duration:"50-70s", title:"算一笔账：花 2280 考个证，月薪能涨多少？",
+    hook:"花 2280 块钱考一个证，值不值？我帮你算一笔账。",
+    script:`【开头 — 算账引入】
+花 2280 块钱考一个证，到底值不值？
+
+别急，我帮你算一笔账。
+
+【第一笔账 — 薪资回报】
+考完消防设施操作员中级证——
+在连云港，月薪 4000 到 6000。
+去苏州、南京，月薪 7000 到 8000。
+去上海，月薪 8000 起步。
+
+2280 的培训投入，一个月的工资就赚回来了。
+
+【第二笔账 — 对比竞品】
+同样的证，去别的城市培训要多少钱？
+市场均价 3280——比我们贵 1000 块。
+去海南考？培训费 5000 + 机票食宿 8000，加起来一万三。
+
+来我们这里，2280 全搞定。
+
+【第三笔账 — 风险成本】
+在别的机构，考不过钱就打水漂了。
+在我们这里，按流程学习，两次不过全额退款。
+
+你的风险？零。
+
+【结尾】
+2280 块，换一个月薪 6000+ 的稳定工作，你觉得值不值？
+私信我，帮你做个学习规划。`,
+    points:["薪资数据：连云港 4-6k / 苏南 7-8k / 上海 8k+","价格对比：2280 vs 市场 3280 vs 海南 13000+","零风险：两次不过全额退款","结尾引导私信"],
+    shooting:"口播 + 画面叠加数字动画（薪资、价格对比）",
+    personnel:"营销方向老师（由甲方安排）",
+    publish:{platform:"抖音官号 + 视频号",time:"周末 10:00-12:00",tags:"#消防证 #考证 #涨薪 #职业规划",note:"评论区准备薪资数据图片素材回复"}
+  },
+  {
+    id:3, cat:"B", catName:"精准人群", duration:"40-55s", title:"宝妈必看：值班室工作到底有多轻松？",
+    hook:"很多宝妈问我，有没有一份工作——不用风吹日晒、不用加班、离家近、还稳定？有。",
+    script:`【开头 — 痛点切入】
+很多宝妈问我，有没有一份工作——
+不用风吹日晒、不用加班、离家近、还稳定？
+
+有。消防控制室值班员。
+
+【工作内容揭秘】
+这份工作干什么呢？
+
+坐在小区、商场或者写字楼的消防控制室里，
+看看监控屏幕，有报警信号就按流程处理。
+
+冬天有暖气，夏天有空调。
+不需要体力劳动，不用跑外面。
+
+【门槛说明】
+唯一的门槛就是——你得有一个消防设施操作员中级证。
+
+报考条件很简单：18 到 70 岁，高中或中专学历就行。
+
+【我们的优势】
+我们的综合通过率 80%，全国平均只有 30%。
+按流程学习，两次不过全额退款。
+
+在家用手机就能练题、练实操，
+考前 5 天来连云港集训就行。
+
+不耽误你带孩子。
+
+【结尾】
+想了解更多？评论区扣"宝妈"，我私信你详细资料。`,
+    points:["精准切入宝妈痛点：轻松、稳定、离家近","工作内容揭秘消除未知感","强调不耽误带孩子","引导词：评论扣'宝妈'"],
+    shooting:"女性老师出镜更佳，场景可选温馨教室或控制室",
+    personnel:"女性老师优先（由甲方安排）",
+    publish:{platform:"抖音 + 小红书",time:"工作日 12:00-14:00（宝妈刷手机高峰）",tags:"#宝妈 #重返职场 #消防证 #轻松工作",note:"小红书可做图文版同步发布"}
+  },
+  {
+    id:4, cat:"B", catName:"精准人群", duration:"40-50s", title:"50 岁了还能考消防证吗？能！70 岁以内都行",
+    hook:"有人跟我说，我都 50 多了，还能考证吗？我说——你就算 65，都没问题。",
+    script:`【开头 — 破除焦虑】
+有人跟我说，我都 50 多了，还能考证吗？
+
+我说——你就算 65 岁，都没问题。
+消防设施操作员证的报考年龄上限是 70 周岁。
+
+【为什么适合年龄大的人】
+而且你想想，消防控制室值班这个岗位——
+不需要体力劳动，不用搬砖不用跑腿。
+坐在屋里看屏幕，按流程操作就行。
+
+这不就是为年龄大的朋友量身定做的工作吗？
+
+【学历要求】
+学历要求也不高，高中或者中专就够了。
+
+【学习方式】
+你可能担心——我年纪大了，学不会怎么办？
+
+我们花 20 万自己研发了一套模拟软件，
+在手机上就能练，反复练、不限次数。
+考前 5 天来学校面对面集训。
+
+综合通过率 80%。
+按流程学，两次不过退全款。
+
+【结尾】
+年龄从来不是问题，行动才是。
+评论区扣"咨询"，我帮你规划。`,
+    points:["破除年龄焦虑：70 岁以内均可","工作性质适合年龄大的人","学习方式友好（手机练习+面对面集训）","通过率 80% + 退款保障消除顾虑"],
+    shooting:"口播，可穿插值班室工作场景画面",
+    personnel:"营销方向老师（由甲方安排）",
+    publish:{platform:"抖音官号",time:"早上 6:00-8:00（中老年刷抖音高峰）",tags:"#50岁考证 #消防证 #中年转型 #值班室",note:"标题和封面突出年龄数字"}
+  },
+  {
+    id:5, cat:"C", catName:"信任建立", duration:"30-45s", title:"冲刺校区实拍：我们教室隔壁就是考场",
+    hook:"你见过教室和考场只隔一堵墙的培训学校吗？我带你看。",
+    script:`【开头 — 视觉冲击】
+你见过教室和考场只隔一堵墙的培训学校吗？
+
+今天带你看。
+
+【实拍展示】
+（镜头从学校大门开始）
+这是我们的冲刺培训校区。
+
+（走到窗边/门口，指向隔壁建筑）
+看到没？那栋楼就是消防鉴定站——也就是考场。
+
+距离多远？6 米。走路 10 秒钟。
+
+【核心优势】
+我们的冲刺校区，1 比 1 复制了鉴定站考区的场景。
+
+你在这边练了什么设备，走到隔壁考的就是同一套设备。
+训练环境和考试环境一模一样。
+
+零适应期，零陌生感。
+
+这就是为什么我们的通过率能做到 80%。
+
+【结尾】
+想来现场看看？评论区扣"参观"，安排你免费体验。`,
+    points:["实拍冲刺校区 → 考场距离","强调 6 米 / 1:1 复刻考区","视觉冲击力强，适合做爆款","注意：不说'拿真题/走关系'，只讲地理便利"],
+    shooting:"必须到冲刺校区实地拍摄，镜头从学校走到考场方向，展示实际距离",
+    personnel:"营销方向老师带镜头走（由甲方安排）",
+    publish:{platform:"抖音 + 视频号",time:"任何时间",tags:"#消防培训 #考场隔壁 #冲刺培训 #连云港",note:"封面用学校和考场同框的画面，距离标注'6米'"}
+  },
+  {
+    id:6, cat:"D", catName:"知识干货", duration:"50-65s", title:"消防证考试到底考什么？一条视频说清楚",
+    hook:"很多人想考消防证，但根本不知道考什么。今天 1 分钟给你讲明白。",
+    script:`【开头】
+很多人想考消防证，但不知道考什么。
+今天 1 分钟讲明白。
+
+【考试结构】
+消防设施操作员中级考试分两部分：
+
+第一部分：理论考试。
+电脑答题，选择题和判断题，满分 100 分，60 分及格。
+
+第二部分：实操考试。
+现场操作消防设备，考官当面打分。
+
+两部分都及格，才能拿证。
+
+【理论考什么】
+理论题主要考消防基础知识：
+火灾报警系统、消防广播、消防电话、联动控制这些。
+都是有题库的，反复刷题就能过。
+
+【实操考什么】
+实操才是难点。
+你要当场操作火灾报警控制器，要会识别报警信号，
+要会做手动自动切换，要会查看报警信息。
+
+还有口述题——考官问你问题，你要现场回答。
+
+【我们的解决方案】
+这就是为什么我们花 20 万开发了模拟软件。
+在家就能反复练实操，练到手熟再来考。
+
+考前 5 天来学校，在 1:1 复刻的考区环境里强化训练。
+
+【结尾】
+想看看考试长什么样？关注我，下一条给你演示。`,
+    points:["考试结构：理论+实操","理论：电脑答题，选择+判断","实操：现场操作+口述题","引出模拟软件的价值"],
+    shooting:"口播 + 考试相关画面（设备、题库截图、模拟软件界面）",
+    personnel:"讲课方向老师（由甲方安排）",
+    publish:{platform:"抖音官号",time:"工作日 18:00-20:00",tags:"#消防证考试 #考什么 #消防设施操作员",note:"系列视频第一条，预告下一条"}
+  },
+  {
+    id:7, cat:"D", catName:"知识干货", duration:"45-60s", title:"考消防证最容易踩的 3 个坑，第三个最致命",
+    hook:"每年有 70% 的人消防证考不过，他们都踩了这 3 个坑。",
+    script:`【开头 — 反面切入】
+每年有 70% 的人消防证考不过。
+为什么？因为他们踩了这 3 个坑。
+
+【坑 1 — 只刷题不练实操】
+很多人觉得理论过了就行。
+错。实操才是大头。
+
+你在手机上刷 1000 道题，到了考场面对真设备，手都在抖。
+实操必须提前练，用仿真软件或者真设备反复练。
+
+【坑 2 — 临时抱佛脚】
+有人考前 3 天才开始看书。
+消防证不是驾照科目一，光背是背不过的。
+
+至少提前 1-2 个月用软件练习，考前 5 天面对面集训，这是最低标准。
+
+【坑 3 — 选错培训机构（最致命）】
+这个最要命。
+
+很多机构收了钱，给你发几个 PPT 就完事了。
+考不过也不退钱，你连找谁都不知道。
+
+选机构要看三点：
+第一，有没有办学许可证。
+第二，通过率数据敢不敢公开。
+第三，考不过退不退钱。
+
+我们的通过率 80%，全国平均 30%。
+按流程学习，两次不过全额退款。
+
+【结尾】
+评论区扣"避坑"，我发你一份备考攻略。`,
+    points:["反面教育引发共鸣","三个坑逐级递进","第三个坑自然引出南消优势","引导词：评论扣'避坑'"],
+    shooting:"口播，情绪递进，第三个坑时语气加重",
+    personnel:"讲课方向老师（由甲方安排）",
+    publish:{platform:"抖音官号",time:"工作日 12:00 或 18:00",tags:"#消防证 #考证避坑 #培训",note:"标题用'第三个最致命'制造悬念"}
+  },
+  {
+    id:8, cat:"C", catName:"信任建立", duration:"45-60s", title:"一天的值班生活是什么样？带你看真实工作日常",
+    hook:"考完消防证上班之后，一天到底干什么？今天带你看一个真实的值班日。",
+    script:`【开头】
+很多人好奇——考完消防证去上班，一天到底干什么？
+
+今天带你看一个真实的值班日。
+
+【早班交接 — 8:00】
+早上 8 点，到岗交接班。
+检查一下设备状态，看看有没有异常报警。
+在交接班记录本上签个字。
+
+【日常值班 — 8:30-17:00】
+然后就是值班了。
+坐在控制室里，看着报警屏幕。
+
+正常情况下，屏幕上绿灯一片，说明一切正常。
+偶尔有个误报，按流程复位就行。
+
+中午有午休，可以吃饭、看手机。
+
+【突发情况处理】
+如果真的有报警信号——
+先确认是真报还是误报，
+真报的话按 119 报警流程走。
+
+但说实话，真正的火警很少。
+大部分时间就是"等待+巡视"。
+
+【下班 — 17:00】
+5 点交班，下班回家。
+不加班，不出差，不用应酬。
+
+【结尾】
+这就是消防控制室值班员的一天。
+稳定、轻松、有证就能干。
+
+想入行？评论区扣"值班"。`,
+    points:["职业揭秘消除未知感","强调轻松稳定的工作性质","真实感是核心：不美化也不丑化","适合所有犹豫要不要考的人群"],
+    shooting:"最佳方案：实拍真实消防控制室一天流程；备选：口播+模拟场景画面",
+    personnel:"有实际值班经验的老师或学员（由甲方安排）",
+    publish:{platform:"抖音 + 视频号",time:"晚上 20:00-22:00",tags:"#值班员 #一天的工作 #消防证 #轻松工作",note:"Vlog 风格，画面真实感优先"}
+  },
+  {
+    id:9, cat:"E", catName:"转化逼单", duration:"50-65s", title:"盛宏石化 296 人团报，为什么不在本地考？",
+    hook:"一家石化企业，一次性报了 296 人考消防证。他们本地没有培训机构吗？有。但他们还是选择来了连云港。",
+    script:`【开头 — 案例引入】
+盛宏石化，一家大型企业。
+一次性报了 296 人来考消防证。
+
+他们本地没有培训机构吗？有。
+但他们还是选择了我们。
+
+【为什么？三个理由】
+
+第一，通过率。
+他们之前在本地报过，通过率只有 20% 多。
+来我们这里，296 人通过了 285 人。
+通过率 96.3%。
+
+第二，价格。
+我们的培训费 2000 多到 3000 多，
+跟他们本地的机构差不多。
+但本地考不过不退钱，我们按流程学两次不过全额退。
+
+第三，效率。
+居家用软件先练，考前 5 天集中来。
+不用长期脱岗，不影响正常生产。
+
+【总结】
+同样的钱，3 倍的通过率，零风险保障。
+你是企业负责人，你怎么选？
+
+【结尾】
+如果您的单位也有持证需求，私信我。
+团报 10 人以上，可签专属协议。`,
+    points:["2B 端标杆案例，吸引企业客户","296 人过 285 人的数据冲击","三个理由逐层说服","结尾引导企业客户私信"],
+    shooting:"口播 + 如有盛宏石化合影照片可叠加展示",
+    personnel:"营销方向老师（由甲方安排）",
+    publish:{platform:"抖音官号",time:"工作日 9:00-11:00（企业HR在线时间）",tags:"#企业培训 #消防证 #团报 #HR",note:"精准投放企业管理者人群标签"}
+  },
+  {
+    id:10, cat:"C", catName:"信任建立", duration:"40-55s", title:"在家用手机练实操是什么体验？现场演示",
+    hook:"别人给你发 PPT 学实操，我们给你一个 20 万研发的模拟器，在手机上就能练。",
+    script:`【开头 — 差异化切入】
+别的培训机构怎么教实操？
+给你发几个 PPT，让你看图背步骤。
+
+我们呢？花 20 万自己研发了一套仿真模拟器。
+手机、平板、电脑都能用。
+
+今天现场给你演示。
+
+【屏幕录制演示】
+（打开软件 → 登录 → 选择设备）
+
+你看，这是火灾报警控制器的仿真界面。
+跟真实设备 1 比 1 还原。
+
+每个按钮都能点，每个灯都会变。
+你可以模拟各种报警情况，反复练操作。
+
+（演示一个操作流程）
+
+还有口述题练习，用 AI 语音识别，
+你说一遍，系统自动判断对不对。
+
+【数据功能】
+题库 500 多道题，随机组卷。
+错了自动记录，下次重点练。
+每天练 20 分钟，一个月实操就能上手。
+
+【结尾】
+报名就送软件账号，居家练到手熟再来考。
+评论区扣"软件"，我发你体验入口。`,
+    points:["差异化：PPT 教学 vs 20 万仿真模拟器","现场演示增加可信度","AI 语音口试是独特亮点","引导词：评论扣'软件'"],
+    shooting:"屏幕录制软件操作 + 老师口播解说",
+    personnel:"讲课方向老师（由甲方安排）+ 软件录屏",
+    publish:{platform:"抖音 + 视频号",time:"任何时间",tags:"#消防培训 #模拟软件 #在家练实操",note:"确保录屏画面清晰，操作流畅"}
+  },
+  {
+    id:11, cat:"D", catName:"知识干货", duration:"45-55s", title:"消防证 vs 电工证 vs 安全员证，考哪个最值？",
+    hook:"消防证、电工证、安全员证——三个证都有人考，但哪个性价比最高？",
+    script:`【开头 — 对比引入】
+消防证、电工证、安全员证——
+很多人纠结到底考哪个。
+
+今天从三个维度帮你分析。
+
+【维度一：含金量】
+电工证：特种作业证，有效期 3 年，需要复审。
+安全员证：行业证书，不是国家职业资格。
+消防证：国家准入类职业资格证，含金量最高。
+
+【维度二：就业面】
+电工证：主要在工厂、工地。
+安全员证：建筑行业居多。
+消防证：有楼的地方就需要——小区、商场、医院、写字楼、政府大楼。
+
+哪个就业面更广？一目了然。
+
+【维度三：工作强度】
+电工：爬高上低，有一定危险性。
+安全员：要跑工地，日晒雨淋。
+消防值班：坐在控制室里，看屏幕，开空调。
+
+【结论】
+如果你没有特别的行业偏好，消防证是性价比最高的选择。
+
+准入类、就业广、工作轻松。
+
+【结尾】
+评论区扣"对比"，我发你三个证的详细分析。`,
+    points:["横向对比增加决策信心","三个维度：含金量/就业面/工作强度","消防证在每个维度都占优","适合还在犹豫考什么证的人群"],
+    shooting:"口播 + 三栏对比图表动画",
+    personnel:"营销方向老师（由甲方安排）",
+    publish:{platform:"抖音官号",time:"工作日 18:00-20:00",tags:"#考证 #消防证 #电工证 #职业选择",note:"评论区可能引发讨论，准备好回复话术"}
+  },
+  {
+    id:12, cat:"B", catName:"精准人群", duration:"45-60s", title:"外地人来连云港考消防证全攻略",
+    hook:"你不是连云港人，能来这里考消防证吗？能。今天给你一份全攻略。",
+    script:`【开头 — 解答疑虑】
+经常有人问我：我不是连云港本地人，能来你们这里考吗？
+
+能。完全没问题。消防证考试不限户籍。
+
+今天给你一份外地考生的全攻略。
+
+【第一步 — 居家准备】
+报名之后，我们会开通线上软件账号。
+在家用手机就能练理论题和模拟实操。
+每天花 20-30 分钟，坚持一个月就够了。
+
+【第二步 — 考前到校】
+考前 5 天来连云港。
+我们安排面对面的集训，
+在 1:1 复刻考场的环境里做最后冲刺。
+
+【第三步 — 考试】
+从我们的冲刺校区走到考场，6 米。
+训练完直接去隔壁考试。
+
+【食宿问题】
+考虑到外地学员，我们可以协助安排住宿。
+连云港消费水平不高，吃住成本可控。
+
+【费用对比】
+来连云港：培训 2280 + 食宿约 1000 = 3000 多。
+去海南：培训 5000 + 机票食宿 8000 = 一万三。
+
+省了一万块。
+
+【结尾】
+外地学员私信我，我帮你规划行程和学习计划。`,
+    points:["解决外地学员的核心顾虑","完整流程：居家→到校→考试","食宿成本透明化","海南对比强化性价比"],
+    shooting:"口播 + 学校和连云港城市画面",
+    personnel:"营销方向老师（由甲方安排）",
+    publish:{platform:"抖音（投全国）",time:"任何时间",tags:"#外地考证 #消防证 #连云港 #异地考试",note:"投放时定向非连云港地区"}
+  },
+  {
+    id:13, cat:"C", catName:"信任建立", duration:"50-60s", title:"68 年消防品牌，央视推荐——我们的底气",
+    hook:"选培训机构，你最怕什么？怕交了钱，人跑了。今天让你看看我们的底气。",
+    script:`【开头 — 直面顾虑】
+选培训机构，你最怕什么？
+交了钱，人跑了。机构不靠谱，拿不到证。
+
+今天让你看看我们的底气。
+
+【品牌历史】
+南消——南京消防器材股份有限公司。
+始建于 1958 年，到今天整整 68 年。
+
+不是昨天注册、今天招生、明天跑路的小作坊。
+
+【官方认证】
+2024 年，"消防十大名牌企业"。
+同年，中央电视台"信用中国"栏目重磅推荐。
+
+南京市高技能人才公共实训基地。
+与金陵科技学院共同成立江苏省研究生工作站。
+承办 2023 年南京市消防行业职业技能竞赛。
+
+【实训基地】
+连云港校区实训基地 4800 平方米，
+入选江苏省 2023 年度综合性虚拟仿真实训基地。
+
+花 20 万自主研发实操模拟软件。
+三个校区阶梯式培训。
+
+【通过率】
+综合通过率 80%，全国平均 30%。
+
+这不是我们自己说的——
+盛宏石化 296 人团报，通过 285 人。数据说话。
+
+【结尾】
+这就是我们的底气。
+想了解更多，评论区扣"了解"。`,
+    points:["品牌背书全面展示","1958年/央视/十大名牌/研究生工作站","数据收尾（296人案例）","适合对机构不信任的犹豫用户"],
+    shooting:"口播 + 荣誉证书/央视截图/校区实拍 画面叠加",
+    personnel:"营销方向老师（由甲方安排）",
+    publish:{platform:"抖音官号",time:"任何时间",tags:"#南消 #消防培训 #央视推荐 #品牌",note:"可作为账号置顶视频"}
+  },
+  {
+    id:14, cat:"D", catName:"知识干货", duration:"35-45s", title:"你的小区消防控制室合规吗？3 秒就能判断",
+    hook:"下次回家，走进你家小区负一楼看一眼——如果消防控制室没人值班，你的安全就是裸奔。",
+    script:`【开头 — 制造关注】
+下次回家，去你小区负一楼看一眼。
+
+消防控制室里有没有人值班？
+值班的人有没有挂着上岗证？
+
+如果没有——你的消防安全就是裸奔。
+
+【法规科普】
+国家规定，消防控制室必须 24 小时有人值班。
+值班人员必须持有消防设施操作员中级证。
+
+不持证上岗，物业公司会被罚款。
+出了事故，责任更大。
+
+【为什么很多小区做不到】
+原因很简单——持证的人不够。
+
+全国有多少栋楼？每栋至少要 2-4 个持证人员轮班。
+缺口非常大。
+
+这就是为什么这个证的就业前景这么好。
+
+【结尾】
+缺口大 = 好就业。
+想考这个证？评论区扣"考证"。`,
+    points:["社会话题切入引发大众关注","法规科普增加权威性","供需缺口 → 就业前景好","适合做爆款内容（跟每个人相关）"],
+    shooting:"实拍小区消防控制室（需获得物业许可）或口播+示意画面",
+    personnel:"营销方向老师（由甲方安排）",
+    publish:{platform:"抖音（可投 DOU+）",time:"晚上 20:00-22:00",tags:"#消防安全 #小区 #消防控制室 #持证上岗",note:"社会话题容易引发讨论和转发，爆款潜力高"}
+  },
+  {
+    id:15, cat:"E", catName:"转化逼单", duration:"40-55s", title:"不持证上岗，罚多少钱？真实案例告诉你",
+    hook:"消防控制室不持证上岗，到底罚多少钱？给你看几个真实案例。",
+    script:`【开头】
+消防控制室不持证上岗，罚多少？
+
+很多人觉得没什么大不了。
+来，看几个真实案例。
+
+【案例 / 法规】
+根据《消防法》和相关规定：
+
+消防控制室值班人员未持证上岗——
+责令改正，并处 1 万元以上 5 万元以下罚款。
+
+如果因此导致火灾事故扩大——
+企业负责人可能面临刑事责任。
+
+【谁会被罚】
+被罚的不是值班员个人，而是用人单位。
+
+物业公司、企业、商场——
+只要你的消防控制室有人没证，随时可能被查。
+
+【反向说明——证的价值】
+所以你知道为什么这个证这么值钱了吧？
+
+用人单位需要你，是因为没你他要被罚钱。
+你有证 = 你有议价权。
+
+【结尾】
+想拿到这个"议价权"？
+评论区扣"报名"，我帮你规划。`,
+    points:["法律风险科普增加证书紧迫性","罚款金额具体化（1-5万）","角度转换：从用人单位角度说明证的价值","注意：案例数据需甲方确认准确性"],
+    shooting:"口播，语气严肃专业",
+    personnel:"讲课方向老师（由甲方安排）",
+    publish:{platform:"抖音官号",time:"工作日 18:00",tags:"#消防法 #持证上岗 #罚款 #消防证",note:"法规数据发布前需甲方校对"}
+  },
+  {
+    id:16, cat:"D", catName:"知识干货", duration:"50-65s", title:"维保巡检一天跑几栋楼？维保方向全揭秘",
+    hook:"消防维保，到底是干什么的？跟监控值班有什么区别？一条视频说清楚。",
+    script:`【开头】
+很多人只知道消防监控——坐在控制室值班。
+但消防证还有另一个方向：检测维保。
+
+今天揭秘维保到底干什么。
+
+【工作模式】
+维保的工作模式是这样的：
+
+你在一家第三方维保公司上班。
+公司跟各个物业签了维保合同。
+你的工作就是每月上门巡检，确保消防设施正常运行。
+
+【一天的工作】
+早上到公司领任务，今天去 2-3 个项目点。
+到了现场，按检查表逐项排查：
+灭火器有没有过期、喷淋头有没有堵、报警器能不能正常触发。
+
+检查完签字，拍照记录，走人。
+
+【跟监控的区别】
+监控：坐在一个地方，看屏幕，相对轻松。
+维保：需要跑动，有一定技术含量，但——
+
+含金量更高，薪资涨幅更大。
+因为维保证考的人少，稀缺性高。
+
+【结尾】
+想快拿证上岗选监控。
+想长期发展高收入选维保。
+两个都考更好。
+
+评论区扣你想考的方向：监控 or 维保？`,
+    points:["维保方向的完整揭秘","与监控形成对比，帮助决策","强调维保的稀缺性和涨薪空间","互动引导：评论区选方向"],
+    shooting:"口播 + 维保巡检实拍画面（如有条件）",
+    personnel:"讲课方向老师（由甲方安排）",
+    publish:{platform:"抖音官号",time:"工作日 12:00 或 18:00",tags:"#消防维保 #维保证 #消防巡检",note:"与#03监控vs维保形成系列"}
+  },
+  {
+    id:17, cat:"E", catName:"转化逼单", duration:"45-60s", title:"为什么我们敢签'不过退全款'？3 个原因",
+    hook:"你可能想——这个机构说不过退全款，是不是在画饼？让我告诉你为什么我们敢这么说。",
+    script:`【开头 — 直面质疑】
+很多人看到"不过退全款"，第一反应是：
+"画饼吧？真退吗？"
+
+合理怀疑。今天告诉你为什么我们敢这么承诺。
+
+【原因一 — 通过率就是底气】
+因为我们的通过率是 80%。全国平均 30%。
+
+如果我的通过率也只有 30%，
+那我签退款协议就是在赔钱。
+但 80% 的通过率，意味着绝大多数学员都能过。
+
+退款只发生在极少数情况。
+
+【原因二 — 完整的培训体系】
+我们有三个校区做阶梯式培训。
+有 20 万研发的仿真模拟软件。
+冲刺校区距考场 6 米，1:1 复刻考区。
+
+这套体系跑了这么久，我们知道——
+只要学员按流程走，基本都能过。
+
+【原因三 — 退款有合理条件】
+当然，退全款不是无条件的。
+
+你必须：
+第一，在软件上练够一定时长。
+第二，考前提前 5 天来校集训。
+第三，两次考试都没过。
+
+这三个条件说明什么？
+说明只要你真的想学，我们就敢保你过。
+
+【结尾】
+不过退全款，不是画饼。
+是因为我们对自己的教学有信心。
+
+想试试？私信我。`,
+    points:["直面用户质疑建立信任","三个原因层层递进","退费条件透明化","不回避'有条件'这个事实反而更可信"],
+    shooting:"口播，语气真诚自信",
+    personnel:"营销方向老师（由甲方安排）",
+    publish:{platform:"抖音 + 视频号",time:"任何时间",tags:"#不过退全款 #消防培训 #靠谱机构",note:"适合做投流素材"}
+  },
+  {
+    id:18, cat:"B", catName:"精准人群", duration:"40-55s", title:"毕业季特辑：应届生考消防证的 3 个理由",
+    hook:"刚毕业找不到工作？别慌。考一个证，给自己多一条路。",
+    script:`【开头 — 毕业季共鸣】
+又到毕业季了。
+
+投了 100 份简历，面了 20 家，录了 0 家。
+不是你不够好，是竞争太卷了。
+
+有没有一种方式，让你在求职市场上多一个硬通货？
+
+【消防证就是硬通货】
+消防设施操作员中级证——
+国家准入类职业资格证书。
+有这个证，你就能干别人干不了的岗位。
+
+【3 个理由】
+
+第一，门槛友好。
+18 岁以上，高中学历就能考。不限专业。
+
+第二，就业面广。
+有楼的地方就需要——小区、商场、医院、政府大楼。
+全国缺口巨大。
+
+第三，稳定。
+不是临时工、不是外包、不是实习。
+物业公司统一招聘，签正式合同，交五险。
+
+【费用】
+培训费 2280 起。
+一个月工资就赚回来了。
+
+【结尾】
+毕业不知道干什么？先考个证，给自己一个兜底选项。
+评论区扣"毕业"，我帮你规划。`,
+    points:["时效性内容（毕业季）","精准切入应届生求职焦虑","三个理由：门槛低/就业广/稳定","结尾给出行动路径"],
+    shooting:"口播，背景可选校园或教室",
+    personnel:"年轻老师出镜更有共鸣（由甲方安排）",
+    publish:{platform:"抖音 + 小红书",time:"6-7 月毕业季集中发布",tags:"#毕业季 #应届生 #考证 #消防证",note:"时效性内容，在毕业季期间投放"}
+  },
+  {
+    id:19, cat:"A", catName:"政策紧迫", duration:"35-45s", title:"消防证全国通用吗？一次说清户籍和考试地的关系",
+    hook:"很多人问：我在连云港考的消防证，回老家能用吗？答案是——全国通用。",
+    script:`【开头 — 解答高频问题】
+"我在连云港考的证，回老家能用吗？"
+
+这个问题每天都有人问。
+答案是——全国通用，终身有效。
+
+【详细说明】
+消防设施操作员证是国家统一颁发的职业资格证书。
+不管你在哪里考的，全国所有地区都认。
+
+你在连云港考了，可以去上海上班。
+你在连云港考了，可以回你老家上班。
+
+没有任何限制。
+
+【为什么选连云港考】
+既然全国通用，那在哪里考不一样？
+
+不一样。因为通过率不一样。
+
+全国平均通过率 30%。
+我们在连云港做到了 80%。
+
+来这里考，拿证的概率比你在本地高两三倍。
+
+【费用对比】
+而且价格——
+我们 2280 到 3280，跟你本地差不多。
+但你本地考不过不退钱，我们两次不过全额退。
+
+【结尾】
+全国通用的证，找通过率最高的地方考。
+这就是聪明人的选择。
+
+评论区扣你的城市名，我帮你算一笔账。`,
+    points:["解答高频问题增加实用性","全国通用 → 为什么选连云港考","引导评论区互动（扣城市名）","适合投放到全国非连云港地区"],
+    shooting:"口播，简洁有力",
+    personnel:"营销方向老师（由甲方安排）",
+    publish:{platform:"抖音（全国投放）",time:"任何时间",tags:"#消防证全国通用 #异地考证 #连云港",note:"评论区互动性强，安排人回复各城市对比"}
+  },
+  {
+    id:20, cat:"C", catName:"信任建立", duration:"55-70s", title:"三个校区全流程展示：你从报名到拿证的每一步",
+    hook:"很多人报了名不知道接下来该干什么。今天把从报名到拿证的全流程给你过一遍。",
+    script:`【开头】
+报了名，然后呢？
+很多人一脸懵——不知道接下来该干什么。
+
+今天带你过一遍，从报名到拿证的完整流程。
+
+【第一步 — 报名】
+提交身份证、照片、学历证明。
+我们帮你在鉴定考试网注册报名。
+等鉴定站审核通过就行。
+
+【第二步 — 居家学习】
+开通线上软件账号。
+在家用手机练理论题 + 模拟实操。
+500 多道题，反复刷。
+
+每天 20-30 分钟，坚持一个月。
+
+【第三步 — 基础培训】
+（画面：职大校区）
+来到我们的基础培训校区。
+在连云港职业技术学院，专业教室环境。
+完成消防知识的初步学习。
+
+【第四步 — 提升培训】
+（画面：文化馆校区）
+转到提升校区，300 平米标准化教室。
+这里有全套实训设备，上手操练。
+
+【第五步 — 冲刺集训】
+（画面：复训站校区）
+考前 5 天，来到冲刺校区。
+
+这里距考场只有 6 米。
+1:1 复刻了考区的所有设备和布局。
+
+最后的强化冲刺。
+
+【第六步 — 考试】
+从教室走到隔壁，10 秒钟到考场。
+你练了什么，考的就是什么。
+
+【第七步 — 拿证】
+考完等结果。通过了，国家颁发证书。
+全国通用，终身有效。
+
+没过？没关系。
+按我们的流程来了，第二次再来。
+两次不过，全额退款。
+
+【结尾】
+这就是从报名到拿证的全流程。
+清清楚楚，明明白白。
+
+想开始？评论区扣"开始"。`,
+    points:["完整流程展示消除信息焦虑","三校区画面 = 展示教学实力","最后引出退款保障兜底","适合做长视频或合集"],
+    shooting:"三校区实拍串联（6月3-4日拍摄素材）",
+    personnel:"营销方向老师全程带镜头（由甲方安排）",
+    publish:{platform:"抖音 + 视频号",time:"任何时间",tags:"#消防培训 #考证流程 #三校区",note:"可作为置顶或合集引导视频"}
+  }
+];
+
+let currentFilter = {cat:'all', status:'all', search:''};
+
+function renderScripts(){
+  const c = document.getElementById('scriptsContainer');
+  c.innerHTML = '';
+  const states = loadStates();
+  let visible = 0;
+  SCRIPTS.forEach(s => {
+    const st = states[s.id] || {status:'draft',comments:[]};
+    // Filter
+    if(currentFilter.cat !== 'all' && s.cat !== currentFilter.cat) return;
+    if(currentFilter.status !== 'all' && st.status !== currentFilter.status) return;
+    if(currentFilter.search){
+      const q = currentFilter.search.toLowerCase();
+      if(!s.title.toLowerCase().includes(q) && !s.script.toLowerCase().includes(q) && !s.catName.includes(q)) return;
+    }
+    visible++;
+
+    const catClass = {A:'cat-a',B:'cat-b',C:'cat-c',D:'cat-d',E:'cat-e'}[s.cat]||'cat-a';
+    const statusClass = st.status !== 'draft' ? `status-${st.status}` : '';
+    const statusTag = {draft:'待审核',approved:'已通过',rejected:'不采用',revised:'需修改'}[st.status]||'待审核';
+    const statusTagClass = {draft:'tag-draft',approved:'tag-approved',rejected:'tag-rejected',revised:'tag-revised'}[st.status]||'tag-draft';
+
+    let commentsHtml = '';
+    if(st.comments && st.comments.length > 0){
+      commentsHtml = '<div class="comment-list">' + st.comments.map((cm,i) => `
+        <div class="comment-item">
+          <button class="comment-delete" onclick="deleteComment(${s.id},${i})" title="删除">&times;</button>
+          <div class="comment-time">${cm.time}</div>
+          <div class="comment-text">${escapeHtml(cm.text)}</div>
+        </div>
+      `).join('') + '</div>';
+    }
+
+    c.innerHTML += `
+    <div class="script ${statusClass}" id="script-${s.id}" data-cat="${s.cat}" data-status="${st.status}">
+      <div class="script-header" onclick="toggleScript(${s.id})">
+        <div class="script-left">
+          <span class="script-num ${catClass}">${String(s.id).padStart(2,'0')}</span>
+          <span class="script-title-text">${s.title}</span>
+          <div class="script-tags">
+            <span class="tag tag-cat">${s.catName}</span>
+            <span class="tag tag-dur">${s.duration}</span>
+            <span class="tag tag-status ${statusTagClass}">${statusTag}</span>
+          </div>
+        </div>
+        <span class="script-toggle">&#9660;</span>
+      </div>
+      <div class="script-body">
+        <div class="section-label">拍摄信息</div>
+        <div class="meta-grid">
+          <div class="meta-item"><strong>时长</strong>${s.duration}</div>
+          <div class="meta-item"><strong>拍摄要求</strong>${s.shooting}</div>
+          <div class="meta-item"><strong>出镜人员</strong>${s.personnel}</div>
+        </div>
+
+        <div class="section-label">开头钩子</div>
+        <div class="hook-box">${s.hook}</div>
+
+        <div class="section-label">完整逐字稿</div>
+        <div class="script-text">${s.script}</div>
+
+        <div class="section-label">核心表达要点</div>
+        <ul class="points-list">${s.points.map(p=>`<li>${p}</li>`).join('')}</ul>
+
+        <div class="section-label">发布信息</div>
+        <div class="publish-box">
+          <strong>发布平台：</strong>${s.publish.platform}<br>
+          <strong>建议时间：</strong>${s.publish.time}<br>
+          <strong>推荐标签：</strong>${s.publish.tags}<br>
+          <strong>发布备注：</strong>${s.publish.note}
+        </div>
+
+        <div class="review-panel no-print">
+          <div class="review-title">审核与反馈</div>
+          <div class="review-actions">
+            <button class="review-btn approve ${st.status==='approved'?'active':''}" onclick="setStatus(${s.id},'approved')">&#10003; 通过</button>
+            <button class="review-btn revise ${st.status==='revised'?'active':''}" onclick="setStatus(${s.id},'revised')">&#9998; 需修改</button>
+            <button class="review-btn reject ${st.status==='rejected'?'active':''}" onclick="setStatus(${s.id},'rejected')">&#10007; 不采用</button>
+          </div>
+          <textarea class="comment-area" id="comment-${s.id}" placeholder="输入修改意见或反馈...（按保存后可留下多条评论）"></textarea>
+          <button class="btn save-comment" onclick="addComment(${s.id})">保存评论</button>
+          ${commentsHtml}
+        </div>
+      </div>
+    </div>`;
+  });
+  updateDashboard();
+}
+
+function toggleScript(id){
+  const el = document.getElementById('script-'+id);
+  el.classList.toggle('open');
+}
+function expandAll(){document.querySelectorAll('.script').forEach(s=>s.classList.add('open'))}
+function collapseAll(){document.querySelectorAll('.script').forEach(s=>s.classList.remove('open'))}
+
+function loadStates(){
+  try{return JSON.parse(localStorage.getItem('nanxiao_scripts_v1'))||{}}catch(e){return{}}
+}
+function saveStates(states){
+  localStorage.setItem('nanxiao_scripts_v1',JSON.stringify(states));
+}
+
+function setStatus(id, status){
+  const states = loadStates();
+  if(!states[id]) states[id]={status:'draft',comments:[]};
+  states[id].status = status;
+  saveStates(states);
+  renderScripts();
+  showToast(`脚本 #${String(id).padStart(2,'0')} 已标记为「${({approved:'已通过',rejected:'不采用',revised:'需修改'})[status]}」`);
+}
+
+function addComment(id){
+  const ta = document.getElementById('comment-'+id);
+  const text = ta.value.trim();
+  if(!text) return;
+  const states = loadStates();
+  if(!states[id]) states[id]={status:'draft',comments:[]};
+  if(!states[id].comments) states[id].comments=[];
+  states[id].comments.push({text, time: new Date().toLocaleString('zh-CN')});
+  saveStates(states);
+  ta.value='';
+  renderScripts();
+  document.getElementById('script-'+id).classList.add('open');
+  showToast('评论已保存');
+}
+
+function deleteComment(id, idx){
+  if(!confirm('确认删除这条评论？')) return;
+  const states = loadStates();
+  if(states[id] && states[id].comments){
+    states[id].comments.splice(idx,1);
+    saveStates(states);
+    renderScripts();
+    document.getElementById('script-'+id).classList.add('open');
+  }
+}
+
+function updateDashboard(){
+  const states = loadStates();
+  let total=0, approved=0, rejected=0, revised=0, draft=0;
+  SCRIPTS.forEach(s=>{
+    const el = document.getElementById('script-'+s.id);
+    if(!el || el.classList.contains('hidden')) return;
+    total++;
+    const st = (states[s.id]||{}).status||'draft';
+    if(st==='approved') approved++;
+    else if(st==='rejected') rejected++;
+    else if(st==='revised') revised++;
+    else draft++;
+  });
+  document.getElementById('totalCount').textContent = SCRIPTS.length;
+  document.getElementById('approvedCount').textContent = approved;
+  document.getElementById('rejectedCount').textContent = rejected;
+  document.getElementById('revisedCount').textContent = revised;
+  document.getElementById('draftCount').textContent = draft;
+}
+
+function filterByCat(cat, btn){
+  currentFilter.cat = cat;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderScripts();
+}
+
+function filterByStatus(status){
+  currentFilter.status = status;
+  document.querySelectorAll('.dash-card').forEach(c=>c.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  renderScripts();
+}
+
+function filterScripts(){
+  currentFilter.search = document.getElementById('searchBox').value;
+  renderScripts();
+}
+
+function exportPDF(){
+  expandAll();
+  setTimeout(()=>window.print(),300);
+}
+
+function exportApproved(){
+  const states = loadStates();
+  currentFilter = {cat:'all',status:'approved',search:''};
+  renderScripts();
+  expandAll();
+  setTimeout(()=>{
+    window.print();
+    currentFilter = {cat:'all',status:'all',search:''};
+    renderScripts();
+  },300);
+}
+
+function escapeHtml(str){
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function showToast(msg){
+  const t = document.createElement('div');
+  t.className='toast';t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),2500);
+}
+
+// Init
+renderScripts();
+</script>
+
+</body>
+</html>
